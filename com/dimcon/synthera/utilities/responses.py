@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 from typing import Any, Mapping
+from com.dimcon.synthera.utilities.custom_json_encoder import CustomJSONEncoder  
 
 class ResponseBuilder:
     """
@@ -49,5 +50,5 @@ class ResponseBuilder:
         return {
             "statusCode": status_code,
             "headers": merged_headers,
-            "body": json.dumps(body, default=str),
+            "body": json.dumps(body, cls=CustomJSONEncoder),  
         }
