@@ -51,9 +51,13 @@ class MeetingQAS(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     meeting_id = Column(String(64), ForeignKey(f"{ChimeMeetingIntegration.__tablename__}.meeting_id"), nullable=False)
+    meeting_title = Column(String(255), nullable=False)
+    lead_name = Column(String(255), nullable=False)
     lead_id = Column(Integer, ForeignKey(f"{LeadDetail.__tablename__}.lead_id"), nullable=False)
     emp_id = Column(Integer, ForeignKey(f"{Employee.__tablename__}.emp_id"), nullable=False)
+    employee_name = Column(String(255), nullable=False)
     organization_id = Column(Integer, ForeignKey(f"{Organization.__tablename__}.organization_id"), nullable=True)
+    organization_name = Column(String(255), nullable=False)
     question_number = Column(Integer, nullable=False)
     question_text = Column(Text, nullable=False)
     answer_text = Column(Text, nullable=False)
