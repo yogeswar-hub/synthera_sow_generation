@@ -2,9 +2,9 @@ import json
 import logging
 from com.dimcon.synthera.utilities.log_handler import LoggerManager
 from com.dimcon.synthera.utilities.responses import ResponseBuilder
-from services.json_service import parse_event
+from services.json_service import JsonService
 from com.dimcon.synthera.utilities.custom_json_encoder import CustomJSONEncoder
-from services.db_service import store_data
+from com.dimcon.synthera.services.db_store_service import SOWDataService
 from services.doc_service import generate_sow
 from services.s3_service import upload_document
 
@@ -17,7 +17,7 @@ def lambda_handler(event, context):
 
     try:
         # Step 1: Parse the incoming JSON event
-        data = parse_event(event)
+        data = JsonService.parse_event(event)
         if not data:
             logger.error("Failed to parse event: Parsed data is None or invalid.")
             return ResponseBuilder.build_response(
@@ -26,7 +26,7 @@ def lambda_handler(event, context):
         logger.info("Event data parsed successfully.")
 
         # Step 2: Store the extracted data into the database
-        db_entry = store_data(data)
+        db_entry = SOWDataService.store_data(data)
         if not db_entry:
             logger.error("Failed to store data into the database.")
             return ResponseBuilder.build_response(
