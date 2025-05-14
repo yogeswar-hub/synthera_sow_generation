@@ -26,6 +26,7 @@ class SOWDocumentGenerator:
         self.mapping_template_path = mapping_template_path
         self.template = {}
         self.answer_lookup = {}
+        self.sub_answer_lookup = {}
         self.document = Document()
 
         # Apply global document styles
@@ -87,15 +88,17 @@ class SOWDocumentGenerator:
             raise
 
     def build_answer_lookup(self):
-        """
-        Create a dictionary of question_id → answers_found from raw payload.
-        """
         try:
             for section in self.sow_payload.get("sections", []):
                 for qa in section.get("questionsAndAnswers", []):
                     self.answer_lookup[qa["question_id"]] = qa["answers_found"]
-            logger.info("Built answer lookup from raw payload.")
 
+                # NEW: handle nested subsections inside each section
+                for subsection in section.get("subsections", []):
+                    for qa in subsection.get("questionsAndAnswers", []):
+                        self.sub_answer_lookup[qa["question_id"]] = qa["answers_found"]
+
+            logger.info("Built answer and sub-answer lookup from raw payload.")
         except Exception as e:
             logger.error(f"Failed to build answer lookup: {e}", exc_info=True)
             raise
@@ -139,12 +142,11 @@ class SOWDocumentGenerator:
             raise
 
     def add_sections(self):
-        """
-        Add sections and subsections with answers into the Word document.
-        """
         try:
             for section in self.template.get("sections", []):
-                self.document.add_heading(section.get("sectionTitle", "Unnamed Section"), level=1)
+                order = section.get("sectionOrder")
+                title = section.get("sectionTitle", f"Section {order}")
+                self.document.add_heading(f"{order} {title}", level=1)
 
                 for question in section.get("questions", []):
                     qid = question.get("questionId")
@@ -153,13 +155,13 @@ class SOWDocumentGenerator:
                         self.document.add_paragraph(answer)
 
                 for subsection in section.get("subsections", []):
-                    order = subsection.get("subsectionOrder")
-                    title = subsection.get("subsectionTitle", f"Subsection {order}")
-                    self.document.add_heading(f"{order} {title}", level=2)
+                    sub_order = subsection.get("subsectionOrder")
+                    sub_title = subsection.get("subsectionTitle", f"Subsection {sub_order}")
+                    self.document.add_heading(f"{sub_order} {sub_title}", level=2)
 
                     for question in subsection.get("questions", []):
                         qid = question.get("questionId")
-                        answers = self.answer_lookup.get(qid, [])
+                        answers = self.sub_answer_lookup.get(qid, [])
                         for answer in answers:
                             self.document.add_paragraph(answer)
 
