@@ -83,15 +83,39 @@ class MeetingSOWJsonStore(Base):
                 parent_sow_id=latest.id if latest else None,
                 created_by=created_by
             )
-            session.add(new_entry)
+            session.add(new_entry) # Ensure the ID is generated before commit
             session.commit()
             logger.info(f"Inserted version {next_version} for lead {lead_id} (SOW ref: {sow_ref})")
-        return new_entry
+
+        return  new_entry
 
     @classmethod
     def get_latest_by_lead(cls, lead_id):
-        with db_util.session_scope() as session:
-            return session.query(cls).filter_by(lead_id=lead_id, is_latest=True).first()
+        try:
+            with db_util.session_scope() as session:
+                row = (
+                    session.query(cls)
+                    .filter_by(lead_id=lead_id, is_latest=True)
+                    .order_by(cls.version_number.desc())
+                    .first()
+                )
+                if not row:
+                    return None
+
+                # ✅ Extract values safely inside session
+                return {
+                    "version_number": row.version_number,
+                    "lead_name": row.lead_name,
+                    "meeting_id": row.meeting_id,
+                    "created_by": row.created_by,
+                    "created_at": row.created_at,
+                    "sow_template_reference_number": row.sow_template_reference_number,
+                    "raw_payload": row.raw_payload
+                }
+
+        except Exception as e:
+            logger.error(f"Failed to fetch latest SOW by lead_id={lead_id}: {e}", exc_info=True)
+            raise
 
 if __name__ == "__main__":
     MeetingSOWJsonStore.create_table(engine)

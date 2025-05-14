@@ -1,0 +1,34 @@
+{
+  "sow_template_reference_number": "SOW12345ABC",
+  "meeting_id": "ea1416e4-90ee-4507-801b-fb781a842713",
+  "lead_id": 100,
+  "lead_name": "Test Lead",
+  "organization_id": 1,
+  "organization_name": "DimCon Inc.",
+  "created_by": 1,
+  "sections": [
+    {
+      "section_name": "Summary & overview",
+      "questionsAndAnswers": [
+        {
+          "question_id": "Q1",
+          "question_text": "explain clearly what is the purpose of this document?",
+          "answers_found": ["statement of work document is used to define the scope and deliverables of a project.It outlines the scope of work, timelines, and deliverables for the project."],
+          "relavancy_score": 0.95
+        },
+        {
+          "question_id": "Q2",
+          "question_text": "Who are the stakeholders involved?",
+          "answers_found": ["Client PM", "Vendor PM", "IT Director"],
+          "relavancy_score": 0.90
+        },
+        {
+          "question_id": "Q3",
+          "question_text": "What is the overall objective or intended outcome from the meeting?",
+          "answers_found": ["To align on project goals and deliverables."],
+          "relavancy_score": 0.85
+        }
+      ]
+    }
+  ]
+}

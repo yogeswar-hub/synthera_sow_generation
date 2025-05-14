@@ -1,0 +1,196 @@
+
+{
+  "sow_template_reference_number": "SOW12345ABC",
+  "meeting_id": "ea1416e4-90ee-4507-801b-fb781a842713",
+  "lead_id": 100,
+  "lead_name": "Test Lead",
+  "organization_id": 1,
+  "organization_name": "DimCon Inc.",
+  "created_by": 1,
+
+
+
+    "sections" : [
+        {
+            "section_name": "Summary & Overview",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q1",
+                    "question_text": "explain clearly what is the purpose of this document?",
+                    "answers_found": ["To formally define the scope, roles, responsibilities, and deliverables for the NetSuite implementation project."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q2", 
+                    "question_text": "Who are the stakeholders involved?",
+                    "answers_found": ["CFO, IT Director, Operations Manager, and department heads across Finance, Inventory, and Sales departments."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q3",
+                    "question_text": "What is the overall objective or intended outcome from the meeting?",
+                    "answers_found": ["Replace fragmented systems with a centralized NetSuite ERP platform to improve reporting, operational efficiency, and decision-making."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        },
+        {
+            "section_name": "About Implementation Partner",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q4",
+                    "question_text": "Provide a brief overview/introduction of the implementation partner?",
+                    "answers_found": ["An ERP implementation consulting firm specialized in NetSuite implementations for nonprofits and mid-sized enterprises, with over 10 years of experience as a NetSuite Alliance Partner."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q5",
+                    "question_text": "What is the implementation partner's expertise relevant to this project?",
+                    "answers_found": ["Completed over 50 NetSuite projects for organizations transitioning from systems like Microsoft Dynamics, QuickBooks, and other legacy ERPs."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q6",
+                    "question_text": "Mention any notable experience or similar past projects?",
+                    "answers_found": ["Recently implemented NetSuite for a large nonprofit operating in five regions with inventory and donor management requirements similar to the current project."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        },
+        {
+            "section_name": "Project Scope - Our Understanding",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q7",
+                    "question_text": "What is the scope of the project and what are the key deliverables?",
+                    "answers_found": ["Full NetSuite implementation covering Financials, Inventory Management, CRM, and e-commerce integrations, with deliverables including a configured live environment, user training, and documentation."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q8",
+                    "question_text": "What are the main business processes and functional areas included in the NetSuite implementation scope?",
+                    "answers_found": ["Financial management, donor management, inventory tracking, e-commerce operations, and CRM."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q9",
+                    "question_text": "Which NetSuite modules or features will be implemented as part of this project?",
+                    "answers_found": ["Financials First, Inventory Management, CRM, SuiteCommerce for e-commerce."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q10",
+                    "question_text": "Are there specific departments, locations, or business units that this project will cover?",
+                    "answers_found": ["Covers Finance, Sales, Warehouse, and Operations departments across all five locations."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q11",
+                    "question_text": "What key objectives or outcomes define the scope of this implementation?",
+                    "answers_found": ["Successful data migration, real-time reporting, seamless donor and sales integration, and minimal downtime at go-live."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q12",
+                    "question_text": "What are the key deliverables?",
+                    "answers_found": ["Configured NetSuite environments, tested integrations, trained users, and post-go-live support."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        },
+        {
+            "section_name": "Configuration Scope",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q13",
+                    "question_text": "Which NetSuite modules and features are included for configuration?",
+                    "answers_found": ["General Ledger, Accounts Payable, Inventory Management, CRM, and Order Management."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q14",
+                    "question_text": "What business process configurations will be done?",
+                    "answers_found": ["Custom approval workflows, role-based access control, and tailored forms for donor tracking."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q15",
+                    "question_text": "Will there be any custom development or SuiteScript coding required?",
+                    "answers_found": ["Yes, especially for custom donor communication automation."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q16",
+                    "question_text": "Are there any third-party bundles in the scope?",
+                    "answers_found": ["Considering Salesforce connector for CRM synchronization and Celigo integrator for e-commerce."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        },
+        {
+            "section_name": "Environmental Planning",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q17",
+                    "question_text": "What NetSuite environments will be utilized?",
+                    "answers_found": ["Production and Sandbox environments."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q18",
+                    "question_text": "Is a dedicated testing/staging environment planned before go-live?",
+                    "answers_found": ["Yes, a staging environment is planned prior to go-live."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q19",
+                    "question_text": "How will configuration/customization be migrated across environments?",
+                    "answers_found": ["Using SuiteBundler and ensuring change tracking through a release management checklist."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q20",
+                    "question_text": "Are there any constraints like sandbox refresh or downtime for go-live?",
+                    "answers_found": ["A 2-week window before go-live for final sandbox refresh and User Acceptance Testing (UAT)."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        },
+        {
+            "section_name": "Data Migration Scope",
+            "questionsAndAnswers": [
+                {
+                    "question_id": "Q21",
+                    "question_text": "What legacy systems or sources are in scope for data migration?",
+                    "answers_found": ["Microsoft Dynamics GP, a custom CRM database, and Shopify for e-commerce."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q22",
+                    "question_text": "Which data elements will be migrated?",
+                    "answers_found": ["Master data (customers, vendors, items), open AR/AP transactions, and limited historical sales orders."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q23",
+                    "question_text": "How much historical data will be migrated?",
+                    "answers_found": ["At least the last 3 fiscal years."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q24",
+                    "question_text": "Who is responsible for data cleansing and mapping?",
+                    "answers_found": ["Internal IT team will clean and map the data, with guidance from the implementation partner on templates and validations."],
+                    "relevancy_score": 0.95
+                },
+                {
+                    "question_id": "Q25",
+                    "question_text": "Are there any formatting/data quality issues to address before migration?",
+                    "answers_found": ["Inconsistent customer naming conventions and missing inventory SKUs are known issues."],
+                    "relevancy_score": 0.95
+                }
+            ]
+        }
+    ]
+
+}
