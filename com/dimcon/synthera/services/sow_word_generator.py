@@ -6,6 +6,7 @@ from docx import Document
 from com.dimcon.synthera.config.sow_template_path import mapping_template_path
 from com.dimcon.synthera.utilities.log_handler import LoggerManager
 from com.dimcon.synthera.utilities.document_styler import DocumentStyler
+from com.dimcon.synthera.utilities.bedrock_rewriter import BedrockRewriter
 
 from com.dimcon.synthera.resources.connect_aurora import get_engine
 from com.dimcon.synthera.utilities.sessions_manager import DBSessionUtil
@@ -28,6 +29,7 @@ class SOWDocumentGenerator:
         self.answer_lookup = {}
         self.sub_answer_lookup = {}
         self.document = Document()
+        self.rewriter = BedrockRewriter()
 
         # Apply global document styles
         DocumentStyler.apply_styles(self.document)
@@ -36,9 +38,6 @@ class SOWDocumentGenerator:
         self.sow_payload = self.get_raw_payload_from_db()
 
     def get_raw_payload_from_db(self):
-        """
-        Fetch the latest raw_payload from meeting_sow_json_store based on lead_id.
-        """
         try:
             with db_util.session_scope() as session:
                 row = (
@@ -52,7 +51,6 @@ class SOWDocumentGenerator:
 
                 logger.info(f"Fetched raw_payload for lead_id={self.lead_id}")
 
-                # Extract values before session closes
                 version = row.version_number
                 created_by = row.created_by
                 created_at = row.created_at
@@ -68,17 +66,11 @@ class SOWDocumentGenerator:
             raise
 
     def get_employee_name(self, emp_id):
-        """
-        Lookup employee name from emp_id.
-        """
         with db_util.session_scope() as session:
             emp = session.query(Employee).filter_by(emp_id=emp_id).first()
             return emp.employee_name if emp else "Unknown"
 
     def load_template(self):
-        """
-        Load the JSON mapping template file.
-        """
         try:
             with open(self.mapping_template_path) as f:
                 self.template = json.load(f)
@@ -93,7 +85,6 @@ class SOWDocumentGenerator:
                 for qa in section.get("questionsAndAnswers", []):
                     self.answer_lookup[qa["question_id"]] = qa["answers_found"]
 
-                # NEW: handle nested subsections inside each section
                 for subsection in section.get("subsections", []):
                     for qa in subsection.get("questionsAndAnswers", []):
                         self.sub_answer_lookup[qa["question_id"]] = qa["answers_found"]
@@ -104,9 +95,6 @@ class SOWDocumentGenerator:
             raise
 
     def add_metadata(self):
-        """
-        Add metadata section at the beginning of the Word document.
-        """
         try:
             meta = self.template.get("documentMetadata", {})
             self.document.add_heading(meta.get("templateName", "SOW Document"), 0)
@@ -119,9 +107,6 @@ class SOWDocumentGenerator:
             raise
 
     def add_table_of_contents(self):
-        """
-        Add a generated table of contents using section and subsection names.
-        """
         try:
             self.document.add_paragraph("Table of Contents", style="TOC Heading")
 
@@ -152,7 +137,8 @@ class SOWDocumentGenerator:
                     qid = question.get("questionId")
                     answers = self.answer_lookup.get(qid, [])
                     for answer in answers:
-                        self.document.add_paragraph(answer)
+                        polished = self.rewriter.rewrite(answer)
+                        self.document.add_paragraph(polished)
 
                 for subsection in section.get("subsections", []):
                     sub_order = subsection.get("subsectionOrder")
@@ -163,7 +149,8 @@ class SOWDocumentGenerator:
                         qid = question.get("questionId")
                         answers = self.sub_answer_lookup.get(qid, [])
                         for answer in answers:
-                            self.document.add_paragraph(answer)
+                            polished = self.rewriter.rewrite(answer)
+                            self.document.add_paragraph(polished)
 
             logger.info("Sections and subsections with answers added to document.")
         except Exception as e:
@@ -171,9 +158,6 @@ class SOWDocumentGenerator:
             raise
 
     def save(self, path: str):
-        """
-        Save the generated Word document to the specified path.
-        """
         try:
             self.document.save(path)
             logger.info(f"Document saved to: {path}")

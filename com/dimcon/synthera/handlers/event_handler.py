@@ -87,6 +87,7 @@ def lambda_handler(event, context):
             "version": version
             # "s3_path": f"s3://{S3_BUCKET_NAME}/{s3_key}" if using S3
         })
+    
 
     except Exception as e:
         logger.error(f"Unhandled exception in SOW handler: {e}", exc_info=True)
